@@ -54,3 +54,23 @@ func AuthenticatePlayer(username, password, player_id):
 @rpc("any_peer")
 func AuthenticationResults(result, player_id):
 	print("Sending Results")
+
+@rpc("any_peer")
+func CreateAccount(username, password, player_id):
+	var gateway_id = multiplayer.get_remote_sender_id()
+	var result
+	var message
+	if PlayerData.PlayerIDs.has(username):
+		result = false
+		message = 2
+	else:
+		result = true
+		message = 3
+		PlayerData.PlayerIDs[username] = {"Password": password}
+		PlayerData.SavePlayerIDs()
+
+	rpc_id(gateway_id, "CreateAccountResults", result, player_id, message)
+	
+@rpc
+func CreateAccountResults(result, player_id, message):
+	pass

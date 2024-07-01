@@ -53,3 +53,27 @@ func ReturnLoginReq(result, player_id, token):
 @rpc("any_peer")
 func ReturnLoginRequest(results, token):
 	print("returning login request")
+
+@rpc("any_peer")
+func CreateAccountRequest(username, password):
+	var player_id = multiplayer.get_remote_sender_id()
+	var valid_request = true
+	if username == "":
+		valid_request = false
+	if password == "":
+		valid_request = false
+	if password.length() <= 6:
+		valid_request = false
+	if valid_request == false:
+		CallReturnCreateAccountRequest(valid_request, player_id, 1)
+	else:
+		Authenticate.CreateAccount(username.to_lower(), password, player_id)
+	
+func CallReturnCreateAccountRequest(result, player_id, message):
+	print("return create account request to:" +str(player_id))
+	rpc_id(player_id, "ReturnCreateAccountRequest", result, message)
+	#network.disconnect_peer(player_id)
+
+@rpc("any_peer")
+func ReturnCreateAccountRequest(result, message):
+	pass

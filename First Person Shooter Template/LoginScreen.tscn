@@ -208,5 +208,6 @@ offset_bottom = 300.0
 
 [connection signal="pressed" from="LoginScreen/Background/LoginScreen/LoginButton" to="LoginScreen" method="_on_login_button_pressed"]
 [connection signal="pressed" from="LoginScreen/Background/LoginScreen/CreateAccountButton" to="." method="_on_create_account_button_pressed"]
+[connection signal="pressed" from="LoginScreen/Background/CreateAccount/ConfirmButton" to="LoginScreen" method="_on_confirm_button_pressed"]
 [connection signal="pressed" from="LoginScreen/Background/CreateAccount/BackButton" to="." method="_on_back_button_pressed"]
 [connection signal="visibility_changed" from="PlayerStats" to="PlayerStats" method="_on_visibility_changed"]

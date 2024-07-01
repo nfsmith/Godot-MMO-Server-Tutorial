@@ -36,3 +36,13 @@ func AuthenticatePlayer(username, password, player_id):
 func AuthenticationResults(result, player_id, token):
 	print("results received and replying to player login request")
 	Gateway.ReturnLoginReq(result, player_id, token)
+
+@rpc
+func CreateAccount(username, password, player_id):
+	print("sending out create account request")
+	rpc_id(1, "CreateAccount", username, password, player_id)
+
+@rpc("any_peer")
+func CreateAccountResults(result, player_id, message):
+	print("results received and replying to player create account request")
+	Gateway.CallReturnCreateAccountRequest(result, player_id, message)
