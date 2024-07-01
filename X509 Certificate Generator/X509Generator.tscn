@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://c7x1n2s37tksd"]
+
+[ext_resource type="Script" path="res://X509Generator.gd" id="1_phil2"]
+
+[node name="X509Generator" type="Node"]
+script = ExtResource("1_phil2")

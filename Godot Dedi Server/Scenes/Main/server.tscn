@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://1cm8m8wtrcik"]
+
+[ext_resource type="Script" path="res://Scenes/Main/Server.gd" id="1_368od"]
+[ext_resource type="Script" path="res://Scenes/Main/PlayerVerification.gd" id="2_pqvu0"]
+[ext_resource type="Script" path="res://Scenes/Main/Combat.gd" id="3_axtmu"]
+
+[node name="Server" type="Node"]
+script = ExtResource("1_368od")
+
+[node name="PlayerVerification" type="Node" parent="."]
+script = ExtResource("2_pqvu0")
+
+[node name="VerificationExpiration" type="Timer" parent="PlayerVerification"]
+wait_time = 10.0
+
+[node name="Combat" type="Node" parent="."]
+script = ExtResource("3_axtmu")
+
+[node name="TokenExpiration" type="Timer" parent="."]
