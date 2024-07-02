@@ -42,7 +42,7 @@ func _Peer_Disconnected(player_id):
 func LoginRequest(username, password):
 	print("login request received")
 	var player_id = multiplayer.get_remote_sender_id()
-	Authenticate.AuthPlayer(username, password, player_id)
+	Authenticate.AuthPlayer(username.to_lower(), password, player_id)
 
 func ReturnLoginReq(result, player_id, token):
 	rpc_id(player_id, "ReturnLoginRequest", result, token)

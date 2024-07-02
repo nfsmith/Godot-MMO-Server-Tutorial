@@ -7,6 +7,7 @@ var max_servers = 5
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	StartServer()
+	
 
 func StartServer():
 	var error = network.create_server(port, max_servers)
@@ -26,29 +27,25 @@ func _Peer_Disconnected(gateway_id):
 	
 @rpc("any_peer")
 func AuthenticatePlayer(username, password, player_id):
-	var token
 	var gateway_id = multiplayer.get_remote_sender_id()
+	var hashed_password
+	var token
 	var result
 	if not PlayerData.PlayerIDs.has(username):
 		result = false
-	elif not PlayerData.PlayerIDs[username].Password == password:
-		result = false
 	else:
-		result = true
-		
-		randomize()
-		#token = str(randi()).sha256_text() + str(Time.get_ticks_msec())
-		var random_number = randi()
-		print(random_number)
-		var hashed = str(random_number).sha256_text()
-		print(hashed)
-		var timestamp = str(int(Time.get_unix_time_from_system()))
-		print(timestamp)
-		token = hashed + timestamp
-		print(token)
-		var gameserver = "GameServer1"
-		GameServers.DistributeLoginToken(token, gameserver)
-	print("authentication result send to gateway server")
+		var retrieved_salt = PlayerData.PlayerIDs[username].Salt
+		hashed_password = GenerateHashedPassword(password, retrieved_salt)
+		if not PlayerData.PlayerIDs[username].Password == hashed_password:
+			result = false
+		else:
+			result = true
+			
+			randomize()
+			token = str(randi()).sha256_text() + str(int(Time.get_unix_time_from_system()))
+			var gameserver = "GameServer1"
+			GameServers.DistributeLoginToken(token, gameserver)
+	
 	rpc_id(gateway_id, "AuthenticationResults", result, player_id, token)
 
 @rpc("any_peer")
@@ -66,11 +63,34 @@ func CreateAccount(username, password, player_id):
 	else:
 		result = true
 		message = 3
-		PlayerData.PlayerIDs[username] = {"Password": password}
+		var salt = GenerateSalt()
+		var hashed_password = GenerateHashedPassword(password, salt)
+		PlayerData.PlayerIDs[username] = {"Password": hashed_password, "Salt": salt}
 		PlayerData.SavePlayerIDs()
 
 	rpc_id(gateway_id, "CreateAccountResults", result, player_id, message)
-	
+
+
+func GenerateSalt():
+	randomize()
+	var salt = str(randi()).sha256_text()
+	print("Salt: " + salt)
+	return salt
+
+func GenerateHashedPassword(password, salt):
+	print(str(Time.get_unix_time_from_system()))
+	var hashed_password = password
+	var rounds = pow(2, 18) #8 pow(2, 18) 262144
+	print("hashed password as input: " + hashed_password)
+	while rounds > 0:
+		hashed_password = (hashed_password + salt).sha256_text()
+		#print("password @ round: " + str(rounds) + " is: " + hashed_password)
+		rounds -= 1
+	print("final hashed password: " + hashed_password)
+	print(str(Time.get_unix_time_from_system()))
+	return hashed_password
+
+
 @rpc
 func CreateAccountResults(result, player_id, message):
 	pass
