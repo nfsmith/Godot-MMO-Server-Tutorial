@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Godot 4 Fps Controller"
-run/main_scene="res://LoginScreen.tscn"
+run/main_scene="res://Example World/Objects/World/world.tscn"
 config/features=PackedStringArray("4.2", "Forward Plus")
 config/icon="res://Title.png"
 

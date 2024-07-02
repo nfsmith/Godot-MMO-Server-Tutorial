@@ -1,0 +1,7 @@
+res://assets/demo_scene.tscn
+res://game.tscn
+res://Game.gd
+res://LoginScreen.tscn
+res://addons/node25d/main_screen/main_screen_25d.tscn
+res://GUI.gd
+res://PlayerStats.gd

@@ -1,0 +1,104 @@
+[gd_scene load_steps=2 format=3 uid="uid://dxl4ty8e07jop"]
+
+[ext_resource type="Script" path="res://PlayerStats.gd" id="1_2uss2"]
+
+[node name="PlayerStats" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_2uss2")
+
+[node name="NinePatchRect" type="NinePatchRect" parent="."]
+layout_mode = 0
+offset_right = 1164.0
+offset_bottom = 660.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="NinePatchRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="NinePatchRect/VBoxContainer"]
+layout_mode = 2
+text = "Stats
+"
+
+[node name="MarginContainer" type="MarginContainer" parent="NinePatchRect/VBoxContainer"]
+layout_mode = 2
+
+[node name="Strength" type="HBoxContainer" parent="NinePatchRect/VBoxContainer"]
+layout_mode = 2
+
+[node name="StatName" type="Label" parent="NinePatchRect/VBoxContainer/Strength"]
+layout_mode = 2
+text = "Strength"
+
+[node name="MarginContainer" type="MarginContainer" parent="NinePatchRect/VBoxContainer/Strength"]
+layout_mode = 2
+
+[node name="StatValue" type="Label" parent="NinePatchRect/VBoxContainer/Strength"]
+layout_mode = 2
+text = "0
+"
+
+[node name="Vitality" type="HBoxContainer" parent="NinePatchRect/VBoxContainer"]
+layout_mode = 2
+
+[node name="StatName" type="Label" parent="NinePatchRect/VBoxContainer/Vitality"]
+layout_mode = 2
+text = "Vitality"
+
+[node name="MarginContainer" type="MarginContainer" parent="NinePatchRect/VBoxContainer/Vitality"]
+layout_mode = 2
+
+[node name="StatValue" type="Label" parent="NinePatchRect/VBoxContainer/Vitality"]
+layout_mode = 2
+text = "0"
+
+[node name="Dexterity" type="HBoxContainer" parent="NinePatchRect/VBoxContainer"]
+layout_mode = 2
+
+[node name="StatName" type="Label" parent="NinePatchRect/VBoxContainer/Dexterity"]
+layout_mode = 2
+text = "Dexterity"
+
+[node name="MarginContainer" type="MarginContainer" parent="NinePatchRect/VBoxContainer/Dexterity"]
+layout_mode = 2
+
+[node name="StatValue" type="Label" parent="NinePatchRect/VBoxContainer/Dexterity"]
+layout_mode = 2
+text = "0"
+
+[node name="Intelligence" type="HBoxContainer" parent="NinePatchRect/VBoxContainer"]
+layout_mode = 2
+
+[node name="StatName" type="Label" parent="NinePatchRect/VBoxContainer/Intelligence"]
+layout_mode = 2
+text = "Intelligence"
+
+[node name="MarginContainer" type="MarginContainer" parent="NinePatchRect/VBoxContainer/Intelligence"]
+layout_mode = 2
+
+[node name="StatValue" type="Label" parent="NinePatchRect/VBoxContainer/Intelligence"]
+layout_mode = 2
+text = "0"
+
+[node name="Wisdom" type="HBoxContainer" parent="NinePatchRect/VBoxContainer"]
+layout_mode = 2
+
+[node name="StatName" type="Label" parent="NinePatchRect/VBoxContainer/Wisdom"]
+layout_mode = 2
+text = "Wisdom"
+
+[node name="MarginContainer" type="MarginContainer" parent="NinePatchRect/VBoxContainer/Wisdom"]
+layout_mode = 2
+
+[node name="StatValue" type="Label" parent="NinePatchRect/VBoxContainer/Wisdom"]
+layout_mode = 2
+text = "0"

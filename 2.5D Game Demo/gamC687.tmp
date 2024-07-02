@@ -1,0 +1,16 @@
+[gd_scene load_steps=5 format=3 uid="uid://4d6jd6oypij2"]
+
+[ext_resource type="Script" path="res://Game.gd" id="1_3oyar"]
+[ext_resource type="PackedScene" uid="uid://clbqjwfrhfoa8" path="res://LoginScreen.tscn" id="1_mhfbi"]
+[ext_resource type="PackedScene" uid="uid://bc8akj25hcmiy" path="res://assets/demo_scene.tscn" id="2_g5uf2"]
+[ext_resource type="PackedScene" path="res://PlayerStats.tscn" id="4_pgn0y"]
+
+[node name="Game" type="Node"]
+script = ExtResource("1_3oyar")
+
+[node name="GUI" parent="." instance=ExtResource("1_mhfbi")]
+
+[node name="DemoScene" parent="." instance=ExtResource("2_g5uf2")]
+visible = false
+
+[node name="PlayerStats" parent="." instance=ExtResource("4_pgn0y")]
