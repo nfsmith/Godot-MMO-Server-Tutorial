@@ -1,0 +1,66 @@
+[gd_scene load_steps=9 format=3 uid="uid://ct05s8vrgf6io"]
+
+[ext_resource type="Script" path="res://Code/Enemy.gd" id="1_yp0fj"]
+[ext_resource type="AudioStream" uid="uid://br1gutaatb6bu" path="res://Sounds/Kill.wav" id="2_yv81f"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_d4i0x"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_xkpvd"]
+radius = 10.0
+height = 20.0
+
+[sub_resource type="Gradient" id="Gradient_0mm5n"]
+colors = PackedColorArray(1, 0, 0, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_rf4mn"]
+gradient = SubResource("Gradient_0mm5n")
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_r4kwt"]
+radius = 12.0
+
+[sub_resource type="Gradient" id="Gradient_j60ij"]
+offsets = PackedFloat32Array(0, 0.503311, 1)
+colors = PackedColorArray(0.742612, 0, 0.133068, 1, 0.999997, 0.367348, 0.389703, 1, 1, 0.387377, 0.324754, 0)
+
+[node name="Enemy" type="CharacterBody2D" groups=["Enemy"]]
+scale = Vector2(2, 2)
+motion_mode = 1
+script = ExtResource("1_yp0fj")
+speed = 45.0
+health = 5
+score_value = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_d4i0x")
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="."]
+mesh = SubResource("SphereMesh_xkpvd")
+texture = SubResource("GradientTexture2D_rf4mn")
+
+[node name="AreaDetector" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AreaDetector"]
+shape = SubResource("CircleShape2D_r4kwt")
+
+[node name="Kill" type="CPUParticles2D" parent="."]
+emitting = false
+amount = 100
+lifetime = 0.75
+one_shot = true
+explosiveness = 1.0
+fract_delta = false
+spread = 180.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 40.0
+initial_velocity_max = 110.0
+angular_velocity_max = 360.0
+linear_accel_min = -200.0
+linear_accel_max = -200.0
+scale_amount_min = 5.0
+scale_amount_max = 8.0
+color_ramp = SubResource("Gradient_j60ij")
+
+[node name="Sound" type="AudioStreamPlayer2D" parent="Kill"]
+stream = ExtResource("2_yv81f")
+
+[connection signal="body_entered" from="AreaDetector" to="." method="_on_area_detector_body_entered"]

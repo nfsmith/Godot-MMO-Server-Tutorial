@@ -31,6 +31,12 @@ func _Peer_Disconnected(player_id):
 	print("User " + str(player_id) + " Disconnected")
 	if(has_node(str(player_id))):
 		get_node(str(player_id)).queue_free()
+		rpc_id(0, "DespawnPlayer", player_id)
+
+
+@rpc("any_peer")
+func DespawnPlayer(player_id):
+	pass
 
 func _on_TokenExpiration_timeout():
 	var current_time = int(Time.get_unix_time_from_system())
@@ -57,6 +63,12 @@ func ReturnToken(token):
 @rpc("any_peer")
 func ReturnTokenVerificationResults(player_id, result):
 	rpc_id(player_id, "ReturnTokenVerificationResults", result)
+	if result == true:
+		rpc_id(0, "SpawnNewPlayer", player_id, Vector2(50,50))
+	
+@rpc
+func SpawnNewPlayer(player_id, location):
+	pass
 
 
 

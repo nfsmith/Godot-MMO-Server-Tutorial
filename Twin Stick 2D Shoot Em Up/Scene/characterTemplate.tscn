@@ -1,0 +1,55 @@
+[gd_scene load_steps=8 format=3 uid="uid://d33rpnt5487jm"]
+
+[ext_resource type="Script" path="res://Scene/characterTemplate.gd" id="1_4kxwe"]
+[ext_resource type="AudioStream" uid="uid://bant2odl7yq3y" path="res://Sounds/Player_Kill.wav" id="3_aa3b5"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_l8pfc"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_hgwqg"]
+radius = 10.0
+height = 20.0
+
+[sub_resource type="Gradient" id="Gradient_17gms"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_15p81"]
+gradient = SubResource("Gradient_17gms")
+fill_from = Vector2(1, 0)
+
+[sub_resource type="Gradient" id="Gradient_mtu4j"]
+colors = PackedColorArray(1, 1, 0, 1, 1, 1, 0, 0)
+
+[node name="CharacterTemplate" type="CharacterBody2D" groups=["Player"]]
+modulate = Color(1, 0.410073, 0.221535, 1)
+collision_mask = 0
+script = ExtResource("1_4kxwe")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_l8pfc")
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="."]
+mesh = SubResource("SphereMesh_hgwqg")
+
+[node name="Gun" type="Sprite2D" parent="MeshInstance2D"]
+position = Vector2(7, 0)
+scale = Vector2(0.234375, 0.0625)
+texture = SubResource("GradientTexture2D_15p81")
+
+[node name="BulletSpawn" type="Marker2D" parent="."]
+position = Vector2(15, 0)
+
+[node name="Explosive" type="CPUParticles2D" parent="."]
+emitting = false
+amount = 450
+lifetime = 2.0
+one_shot = true
+spread = 180.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 70.0
+initial_velocity_max = 210.0
+angular_velocity_max = 360.0
+scale_amount_min = 10.0
+scale_amount_max = 15.0
+color_ramp = SubResource("Gradient_mtu4j")
+
+[node name="Sound" type="AudioStreamPlayer" parent="Explosive"]
+stream = ExtResource("3_aa3b5")
