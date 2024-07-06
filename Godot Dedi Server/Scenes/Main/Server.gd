@@ -87,8 +87,6 @@ func SendWorldState(world_state):
 func ReceiveWorldState(world_state):
 	pass
 
-
-
 @rpc("any_peer")
 func FetchSkillDamage(skill_name, requester):
 	var player_id = multiplayer.get_remote_sender_id()
