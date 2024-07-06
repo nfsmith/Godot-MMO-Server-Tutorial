@@ -11,6 +11,7 @@ signal verify_success
 signal verify_fail
 signal spawn_player(player_id, spawn_position)
 signal despawn_player(player_id)
+signal update_world_state(world_states)
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass
@@ -49,6 +50,20 @@ func ReturnTokenVerificationResults(result):
 	else:
 		print("Login failed, please try again")
 		verify_fail.emit()
+
+func SendPlayerState(player_state):
+	print(player_state)
+	ReceivePlayerState.rpc_id(1, player_state)
+
+@rpc("any_peer","unreliable")
+func ReceivePlayerState(player_state):
+	pass
+
+@rpc
+func ReceiveWorldState(world_state):
+	print(world_state)
+	update_world_state.emit(world_state)
+
 
 @rpc
 func SpawnNewPlayer(player_id, spawn_position):

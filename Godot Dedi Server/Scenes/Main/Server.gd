@@ -5,6 +5,7 @@ var port = 1909
 var max_players = 100
 
 var expected_tokens = []
+var player_state_collection = {}
 
 @onready var player_verification_process = get_node("PlayerVerification")
 @onready var combat_functions = get_node("Combat")
@@ -68,6 +69,22 @@ func ReturnTokenVerificationResults(player_id, result):
 	
 @rpc
 func SpawnNewPlayer(player_id, location):
+	pass
+
+@rpc("any_peer", "unreliable")
+func ReceivePlayerState(player_state):
+	var player_id = multiplayer.get_remote_sender_id()
+	if player_state_collection.has(player_id):
+		if player_state_collection[player_id]["T"] < player_state["T"]:
+			player_state_collection[player_id] = player_state
+	else:
+		player_state_collection[player_id] = player_state
+
+func SendWorldState(world_state):
+	ReceiveWorldState.rpc_id(0, world_state)
+
+@rpc("unreliable")
+func ReceiveWorldState(world_state):
 	pass
 
 

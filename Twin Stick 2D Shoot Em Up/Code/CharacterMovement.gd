@@ -6,6 +6,7 @@ const SPEED = 300.0
 @export var fire_rate = 0.2
 var actual_rate = 0.2
 var timer = 0
+var player_state
 
 var power = false
 var power_timer = 0
@@ -16,10 +17,20 @@ signal player_died
 var die: bool = false
 
 func _ready():
+	Server.verify_success.connect(_OnLoginSuccess)
+	set_physics_process(false)
 	# I have no idea why this makes the camera do that thing, but this is cool!
 	Camera.set("position", Vector2(100, 0))
 
+func _OnLoginSuccess():
+	set_physics_process(true)
+	DefinePlayerState()
+
 func _physics_process(delta):
+	MovementLoop(delta)
+	DefinePlayerState()
+
+func MovementLoop(delta):
 	timer += delta
 	# Power up that you can get :D
 	if power == true:
@@ -64,8 +75,12 @@ func _physics_process(delta):
 		
 	# look at mouse
 	self.look_at(get_global_mouse_position())
-	
 	move_and_slide()
+
+func DefinePlayerState():
+	player_state = {"T": Time.get_unix_time_from_system(), "P": self.global_position}
+	Server.SendPlayerState(player_state)
+
 
 # all the things that it do when you die.
 func Die():
