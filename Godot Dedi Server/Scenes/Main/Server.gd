@@ -56,6 +56,24 @@ func _on_TokenExpiration_timeout():
 	print(expected_tokens)
 
 @rpc("any_peer")
+func FetchServerTime(client_time):
+	var player_id = multiplayer.get_remote_sender_id()
+	ReturnServerTime.rpc_id(player_id, Time.get_unix_time_from_system(), client_time)
+	
+@rpc
+func ReturnServerTime(server_time, client_time):
+	pass
+
+@rpc("any_peer")
+func DetermineLatency(client_time):
+	var player_id = multiplayer.get_remote_sender_id()
+	ReturnLatency.rpc_id(player_id, client_time)
+
+@rpc
+func ReturnLatency(client_time):
+	pass
+
+@rpc("any_peer")
 func FetchToken(player_id):
 	rpc_id(player_id, "FetchToken")
 
