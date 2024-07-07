@@ -52,7 +52,6 @@ func ReturnTokenVerificationResults(result):
 		verify_fail.emit()
 
 func SendPlayerState(player_state):
-	print(player_state)
 	ReceivePlayerState.rpc_id(1, player_state)
 
 @rpc("any_peer","unreliable")
@@ -61,7 +60,6 @@ func ReceivePlayerState(player_state):
 
 @rpc
 func ReceiveWorldState(world_state):
-	print(world_state)
 	update_world_state.emit(world_state)
 
 

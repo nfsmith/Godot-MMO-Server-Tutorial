@@ -31,6 +31,9 @@ func _Peer_Connected(player_id):
 func _Peer_Disconnected(player_id):
 	print("User " + str(player_id) + " Disconnected")
 	if(has_node(str(player_id))):
+		print(player_state_collection)
+		player_state_collection.erase(player_id)
+		print(player_state_collection)
 		get_node(str(player_id)).queue_free()
 		rpc_id(0, "DespawnPlayer", player_id)
 
