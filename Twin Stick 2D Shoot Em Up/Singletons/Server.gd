@@ -19,7 +19,7 @@ signal despawn_player(player_id)
 signal update_world_state(world_states)
 
 
-func _physics_process(delta): #0.01667
+func _physics_process(delta): #0.01667s
 	client_clock += int(delta*1000) + delta_latency
 	delta_latency = 0
 	decimal_collector += (delta * 1000) - int(delta * 1000)
@@ -42,7 +42,7 @@ func _OnConnectionFailed():
 	
 func _OnConnectionSucceeded():
 	print("Successfully connected to game server")
-	FetchServerTime.rpc_id(1,Time.get_unix_time_from_system())
+	FetchServerTime.rpc_id(1,Time.get_ticks_msec())
 	var timer = Timer.new()
 	timer.wait_time = 0.5
 	timer.autostart = true
@@ -55,16 +55,16 @@ func FetchServerTime(client_time):
 
 @rpc
 func ReturnServerTime(server_time, client_time):
-	latency = (Time.get_unix_time_from_system() - client_time) / 2
+	latency = (Time.get_ticks_msec() - client_time) / 2
 	client_clock = server_time + latency
 
 @rpc("any_peer")
 func DetermineLatency():
-	DetermineLatency.rpc_id(1, Time.get_unix_time_from_system())
+	DetermineLatency.rpc_id(1, Time.get_ticks_msec())
 
 @rpc
 func ReturnLatency(client_time):
-	latency_array.append((Time.get_unix_time_from_system() - client_time) / 2)
+	latency_array.append((Time.get_ticks_msec() - client_time) / 2)
 	if latency_array.size() == 9:
 		var total_latency = 0
 		latency_array.sort()
@@ -128,6 +128,15 @@ func FetchSkillDamage(skill_name, requester):
 @rpc
 func ReturnSkillDamage(s_damage, requester):
 	print(s_damage)
+
+
+func NPCHit(enemy_id, damage):
+	SendNPCHit.rpc_id(1, enemy_id, damage)
+
+@rpc("any_peer")
+func SendNPCHit(enemy_id, damage):
+	pass
+
 
 func CallFetchPlayerStats():
 	if not multiplayer.is_server():

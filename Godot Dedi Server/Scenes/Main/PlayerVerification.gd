@@ -8,12 +8,12 @@ var awaiting_verification = {}
 func Start(player_id):
 	#token verification must be added here
 	#CreatePlayerContainer(player_id)
-	awaiting_verification[player_id] = {"Timestamp": Time.get_unix_time_from_system()}
+	awaiting_verification[player_id] = {"Timestamp": Time.get_ticks_msec()}
 	main_interface.FetchToken(player_id)
 
 func Verify(player_id, token):
 	var token_verification = false
-	while int(Time.get_unix_time_from_system()) - int(token.right(10)) <= 30:
+	while Time.get_ticks_msec() - int(token.right(10)) <= 30:
 		if main_interface.expected_tokens.has(token):
 			token_verification = true
 			CreatePlayerContainer(player_id)
@@ -28,7 +28,7 @@ func Verify(player_id, token):
 		main_interface.network.disconnect_peer(player_id)
 	
 func _on_VerificationExpiration_timeout():
-	var current_time = int(Time.get_unix_time_from_system())
+	var current_time = Time.get_ticks_msec()
 	var start_time
 	if awaiting_verification == {}:
 		pass

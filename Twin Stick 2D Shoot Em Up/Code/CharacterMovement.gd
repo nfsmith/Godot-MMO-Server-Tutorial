@@ -20,10 +20,11 @@ func _ready():
 	Server.verify_success.connect(_OnLoginSuccess)
 	set_physics_process(false)
 	# I have no idea why this makes the camera do that thing, but this is cool!
-	Camera.set("position", Vector2(100, 0))
+	#Camera.set("position", Vector2(100, 0))
 
 func _OnLoginSuccess():
 	set_physics_process(true)
+	#Camera.set("position", Vector2(100, 0))
 	DefinePlayerState()
 
 func _physics_process(delta):
@@ -56,7 +57,7 @@ func MovementLoop(delta):
 	
 	# if the player isn't dead...
 	if Input.get_action_raw_strength("Shoot") && timer >= actual_rate:
-		Server.CallFetchSkillDamage("Ice Spear", get_instance_id())
+		
 		var temp = Bullet.instantiate()
 		add_sibling(temp)
 		temp.global_position = get_node("BulletSpawn").get("global_position")
@@ -78,7 +79,7 @@ func MovementLoop(delta):
 	move_and_slide()
 
 func DefinePlayerState():
-	player_state = {"T": Time.get_unix_time_from_system(), "P": self.global_position}
+	player_state = {"T": Time.get_ticks_msec(), "P": self.global_position}
 	Server.SendPlayerState(player_state)
 
 

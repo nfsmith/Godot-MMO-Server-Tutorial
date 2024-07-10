@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://dyqku4b80noy4"]
+[gd_scene load_steps=10 format=3 uid="uid://dyqku4b80noy4"]
 
 [ext_resource type="Script" path="res://Scene/Game.gd" id="1_3c561"]
 [ext_resource type="Script" path="res://Code/Score Script.gd" id="1_6ltk3"]
@@ -7,7 +7,6 @@
 [ext_resource type="PackedScene" uid="uid://ct05s8vrgf6io" path="res://Scene/bigger_enemy.tscn" id="3_6oemb"]
 [ext_resource type="PackedScene" uid="uid://chluf4qb455d5" path="res://Scene/spawner.tscn" id="3_m5r3x"]
 [ext_resource type="PackedScene" uid="uid://dqq6h8h061orv" path="res://Scene/spawn_area.tscn" id="5_2hk0k"]
-[ext_resource type="PackedScene" uid="uid://rxrmy77myb60" path="res://Scene/enemy.tscn" id="8_51xyf"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dsddx"]
 
@@ -137,5 +136,4 @@ mesh = SubResource("BoxMesh_eii8h")
 
 [node name="OtherPlayers" type="Node2D" parent="Main Scene"]
 
-[node name="Enemy" parent="Main Scene" instance=ExtResource("8_51xyf")]
-position = Vector2(500, 600)
+[node name="Enemies" type="Node2D" parent="Main Scene"]

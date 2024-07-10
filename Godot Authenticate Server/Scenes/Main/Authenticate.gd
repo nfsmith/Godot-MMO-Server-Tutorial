@@ -42,7 +42,7 @@ func AuthenticatePlayer(username, password, player_id):
 			result = true
 			
 			randomize()
-			token = str(randi()).sha256_text() + str(int(Time.get_unix_time_from_system()))
+			token = str(randi()).sha256_text() + str(int(Time.get_ticks_msec()))
 			var gameserver = "GameServer1"
 			GameServers.DistributeLoginToken(token, gameserver)
 	
@@ -78,16 +78,12 @@ func GenerateSalt():
 	return salt
 
 func GenerateHashedPassword(password, salt):
-	print(str(Time.get_unix_time_from_system()))
 	var hashed_password = password
 	var rounds = pow(2, 18) #8 pow(2, 18) 262144
-	print("hashed password as input: " + hashed_password)
 	while rounds > 0:
 		hashed_password = (hashed_password + salt).sha256_text()
 		#print("password @ round: " + str(rounds) + " is: " + hashed_password)
 		rounds -= 1
-	print("final hashed password: " + hashed_password)
-	print(str(Time.get_unix_time_from_system()))
 	return hashed_password
 
 

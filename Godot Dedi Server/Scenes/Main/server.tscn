@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://1cm8m8wtrcik"]
+[gd_scene load_steps=6 format=3 uid="uid://1cm8m8wtrcik"]
 
 [ext_resource type="Script" path="res://Scenes/Main/Server.gd" id="1_368od"]
 [ext_resource type="Script" path="res://Scenes/Main/PlayerVerification.gd" id="2_pqvu0"]
 [ext_resource type="Script" path="res://Scenes/Main/Combat.gd" id="3_axtmu"]
 [ext_resource type="Script" path="res://Scenes/Main/StateProcessing.gd" id="3_i3f2a"]
+[ext_resource type="Script" path="res://Scenes/Main/Map.gd" id="5_hfibw"]
 
 [node name="Server" type="Node"]
 script = ExtResource("1_368od")
@@ -19,5 +20,8 @@ script = ExtResource("3_i3f2a")
 
 [node name="Combat" type="Node" parent="."]
 script = ExtResource("3_axtmu")
+
+[node name="Map" type="Node" parent="."]
+script = ExtResource("5_hfibw")
 
 [node name="TokenExpiration" type="Timer" parent="."]

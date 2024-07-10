@@ -43,7 +43,7 @@ func DespawnPlayer(player_id):
 	pass
 
 func _on_TokenExpiration_timeout():
-	var current_time = int(Time.get_unix_time_from_system())
+	var current_time = Time.get_ticks_msec()
 	var token_time
 	if expected_tokens == []:
 		pass
@@ -58,7 +58,7 @@ func _on_TokenExpiration_timeout():
 @rpc("any_peer")
 func FetchServerTime(client_time):
 	var player_id = multiplayer.get_remote_sender_id()
-	ReturnServerTime.rpc_id(player_id, Time.get_unix_time_from_system(), client_time)
+	ReturnServerTime.rpc_id(player_id, Time.get_ticks_msec(), client_time)
 	
 @rpc
 func ReturnServerTime(server_time, client_time):
@@ -115,6 +115,10 @@ func FetchSkillDamage(skill_name, requester):
 	rpc_id(player_id, "ReturnSkillDamage", damage, requester)
 	print("sending " + str(damage) + " to player")
 	
+
+@rpc("any_peer")
+func SendNPCHit(enemy_id, damage):
+	get_node("Map").NPCHit(enemy_id, damage)
 
 @rpc
 func ReturnSkillDamage():
