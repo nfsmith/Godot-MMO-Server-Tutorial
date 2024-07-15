@@ -109,6 +109,16 @@ func ReceiveWorldState(world_state):
 	pass
 
 @rpc("any_peer")
+func Attack(position, animation_vector, spawn_time):
+	var player_id = multiplayer.get_remote_sender_id()
+	ReceiveAttack.rpc_id(0, position, animation_vector, spawn_time, player_id)
+
+@rpc
+func ReceiveAttack(position, animation_vector, spawn_time, player_id):
+	pass
+
+
+@rpc("any_peer")
 func FetchSkillDamage(skill_name, requester):
 	var player_id = multiplayer.get_remote_sender_id()
 	var damage = combat_functions.FetchSkillDamage(skill_name, player_id)

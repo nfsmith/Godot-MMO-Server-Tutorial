@@ -17,6 +17,7 @@ signal verify_fail
 signal spawn_player(player_id, spawn_position)
 signal despawn_player(player_id)
 signal update_world_state(world_states)
+signal receive_attack(position, animation_vector, spawn_time, player_id)
 
 
 func _physics_process(delta): #0.01667s
@@ -115,6 +116,19 @@ func SpawnNewPlayer(player_id, spawn_position):
 func DespawnPlayer(player_id):
 	despawn_player.emit(player_id)
 
+func SendAttack(position, animation_vector):
+	Attack.rpc_id(1,position, animation_vector, client_clock)
+
+@rpc("any_peer")
+func Attack(position, animation_vector, client_clock):
+	pass
+
+@rpc
+func ReceiveAttack(position, animation_vector, spawn_time, player_id):
+	if player_id == multiplayer.get_unique_id():
+		pass # This would be a moment to correct client side predictions
+	else:
+		receive_attack.emit(position, animation_vector, spawn_time, player_id)
 
 func CallFetchSkillDamage(skill_name, requester):
 	if not multiplayer.is_server():

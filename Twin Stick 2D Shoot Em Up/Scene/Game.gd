@@ -12,6 +12,7 @@ func _ready():
 	Server.spawn_player.connect(SpawnNewPlayer)
 	Server.despawn_player.connect(_DespawnPlayer)
 	Server.update_world_state.connect(UpdateWorldState)
+	Server.receive_attack.connect(ReceiveAttack)
 
 func _OnSuccessfulLogin():
 	$GUI.LoginScreen.hide()
@@ -36,6 +37,7 @@ func SpawnNewEnemy(enemy_id, enemy_dict):
 	new_enemy.type = enemy_dict["EnemyType"]
 	new_enemy.state = enemy_dict["EnemyState"]
 	new_enemy.name = str(enemy_id)
+	new_enemy.add_to_group("Enemies")
 	get_node("Main Scene/Enemies/").add_child(new_enemy, true)
 
 func _DespawnPlayer(player_id):
@@ -49,7 +51,6 @@ func UpdateWorldState(world_state):
 
 func _physics_process(delta):
 	var render_time = Server.client_clock - interpolation_offset
-	
 	#var render_time = Time.get_unix_time_from_system() - interpolation_offset
 	if world_state_buffer.size() > 1:
 		while world_state_buffer.size() > 2 and render_time > world_state_buffer[2].T:
@@ -67,7 +68,8 @@ func _physics_process(delta):
 					continue
 				if get_node("Main Scene/OtherPlayers").has_node(str(player)):
 					var new_position = lerp(world_state_buffer[1][player]["P"], world_state_buffer[2][player]["P"], interpolation_factor)
-					get_node("Main Scene/OtherPlayers/"+str(player)).MovePlayer(new_position)
+					var animation_vector = world_state_buffer[2][player]["A"]
+					get_node("Main Scene/OtherPlayers/"+str(player)).MovePlayer(new_position, animation_vector)
 				else:
 					SpawnNewPlayer(player, world_state_buffer[2][player]["P"])
 			for enemy in world_state_buffer[2]["Enemies"].keys():
@@ -93,4 +95,8 @@ func _physics_process(delta):
 				if get_node("Main Scene/OtherPlayers").has_node(str(player)):
 					var position_delta = (world_state_buffer[1][player]["P"] - world_state_buffer[0][player]["P"])
 					var new_position = world_state_buffer[1][player]["P"] + (position_delta * extrapolation_factor)
-					get_node("Main Scene/OtherPlayers/" + str(player)).MovePlayer(new_position)
+					var new_animation_vector = world_state_buffer[1][player]["A"]
+					get_node("Main Scene/OtherPlayers/" + str(player)).MovePlayer(new_position, new_animation_vector)
+
+func ReceiveAttack(position, animation_vector, spawn_time, player_id):
+	get_node("Main Scene/OtherPlayers/"+str(player_id)).attack_dict[spawn_time] = {"Position": position, "AnimationVector": animation_vector}
