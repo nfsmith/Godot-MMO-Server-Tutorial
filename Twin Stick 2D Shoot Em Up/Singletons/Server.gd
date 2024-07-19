@@ -116,11 +116,11 @@ func SpawnNewPlayer(player_id, spawn_position):
 func DespawnPlayer(player_id):
 	despawn_player.emit(player_id)
 
-func SendAttack(position, animation_vector):
-	Attack.rpc_id(1,position, animation_vector, client_clock)
+func SendAttack(position, animation_vector, a_rotation, a_position, a_direction):
+	Attack.rpc_id(1,position, animation_vector, client_clock, a_rotation, a_position, a_direction)
 
 @rpc("any_peer")
-func Attack(position, animation_vector, client_clock):
+func Attack(position, animation_vector, client_clock, a_rotation, a_position, a_direction):
 	pass
 
 @rpc

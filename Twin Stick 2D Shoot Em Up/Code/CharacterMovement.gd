@@ -156,18 +156,15 @@ func Respawn():
 	#get_parent().reload_current_scene()
 
 func Attack():
-	print(animation_vector)
-	Server.SendAttack(position, animation_vector)
-	animation_mode.travel("Melee")
-	#await get_tree().create_timer(1.2).timeout
-	#attacking = false
-	
 	get_node("TurnAxis").rotation = get_angle_to(get_global_mouse_position())
 	var icespear_instance = icespear.instantiate()
-	icespear_instance.direction = animation_vector
-	icespear_instance.position = get_node("TurnAxis").global_position
-	#icespear_instance.direction = get_node("TurnAxis").global_position
-	#animation_mode.travel("Cast")
+	var a_rotation = get_angle_to((get_global_mouse_position()))
+	var a_position = get_node("TurnAxis").global_position
+	var a_direction = animation_vector
+	Server.SendAttack(position, animation_vector, a_rotation, a_position, a_direction)
+	icespear_instance.direction = a_direction
+	icespear_instance.position = a_position
+	animation_mode.travel("Melee")
 	await get_tree().create_timer(0.2).timeout
 	add_sibling(icespear_instance)
 	await get_tree().create_timer(0.2).timeout

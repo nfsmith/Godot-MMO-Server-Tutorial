@@ -109,8 +109,9 @@ func ReceiveWorldState(world_state):
 	pass
 
 @rpc("any_peer")
-func Attack(position, animation_vector, spawn_time):
+func Attack(position, animation_vector, spawn_time, a_rotation, a_position, a_direction):
 	var player_id = multiplayer.get_remote_sender_id()
+	get_node("WorldMap").SpawnAttack(spawn_time, a_rotation, a_position, a_direction, player_id)
 	ReceiveAttack.rpc_id(0, position, animation_vector, spawn_time, player_id)
 
 @rpc

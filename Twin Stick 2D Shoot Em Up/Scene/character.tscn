@@ -641,6 +641,7 @@ transitions = ["Idle", "Walk", SubResource("AnimationNodeStateMachineTransition_
 [node name="Character" type="CharacterBody2D" groups=["Player"]]
 script = ExtResource("1_g1m0b")
 Bullet = ExtResource("2_fsq17")
+fire_rate = null
 
 [node name="TurnAxis" type="Marker2D" parent="."]
 

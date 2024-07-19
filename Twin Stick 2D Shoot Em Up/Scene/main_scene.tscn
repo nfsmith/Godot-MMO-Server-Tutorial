@@ -72,6 +72,7 @@ text = "Score:"
 
 [node name="Character" parent="Main Scene" instance=ExtResource("1_7r2wr")]
 position = Vector2(383, 397)
+fire_rate = null
 
 [node name="Spawner" parent="Main Scene" instance=ExtResource("3_m5r3x")]
 position = Vector2(587, 114)

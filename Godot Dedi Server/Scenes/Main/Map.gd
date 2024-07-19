@@ -27,6 +27,7 @@ func SpawnEnemy():
 		occupied_locations[enemy_id_counter] =  open_locations[rng_location_index]
 		open_locations.remove_at(rng_location_index)
 		enemy_list[enemy_id_counter] =  {"EnemyType": type, "EnemyLocation": location, "EnemyHealth": 500, "EnemyMaxHealth": 500, "EnemyState": "Idle", "time_out": 1}
+		get_parent().get_node("WorldMap").SpawnEnemy(enemy_id_counter, location)
 		enemy_id_counter += 1
 	for enemy in enemy_list.keys():
 		if enemy_list[enemy]["EnemyState"] == "Dead":

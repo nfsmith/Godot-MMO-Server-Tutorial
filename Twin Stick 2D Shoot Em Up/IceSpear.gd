@@ -32,9 +32,6 @@ func _physics_process(delta):
 	for i in get_slide_collision_count():
 		var collision = get_slide_collision(i)
 		var collider = collision.get_collider()
-		print("Collided with: ", collider.name)
-		print("original: ", str(original))
-		print("is in group: ", str(collider.is_in_group("Enemies")))
 		if collider.name != "Character":
 			get_node("CollisionShape2D").set_deferred("disabled", true)
 			if collider.is_in_group("Enemies") and original == true:
