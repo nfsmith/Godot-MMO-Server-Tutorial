@@ -8,7 +8,6 @@ var expected_tokens = []
 var player_state_collection = {}
 
 @onready var player_verification_process = get_node("PlayerVerification")
-@onready var combat_functions = get_node("Combat")
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -119,21 +118,7 @@ func ReceiveAttack(position, animation_vector, spawn_time, player_id):
 	pass
 
 
-@rpc("any_peer")
-func FetchSkillDamage(skill_name, requester):
-	var player_id = multiplayer.get_remote_sender_id()
-	var damage = combat_functions.FetchSkillDamage(skill_name, player_id)
-	rpc_id(player_id, "ReturnSkillDamage", damage, requester)
-	print("sending " + str(damage) + " to player")
-	
 
-@rpc("any_peer")
-func SendNPCHit(enemy_id, damage):
-	get_node("Map").NPCHit(enemy_id, damage)
-
-@rpc
-func ReturnSkillDamage():
-	print("Returning")
 
 @rpc("any_peer")
 func FetchPlayerStats():

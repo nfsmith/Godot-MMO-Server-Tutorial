@@ -43,7 +43,6 @@ func Attack():
 			#icespear_instance.impulse_rotation = get_node("TurnAxis").rotation
 			icespear_instance.position = get_node("TurnAxis").global_position
 			icespear_instance.direction = attack_dict[attack]["AnimationVector"]
-			icespear_instance.original = false
 			attack_dict.erase(attack)
 			await get_tree().create_timer(0.2).timeout
 			add_sibling(icespear_instance)

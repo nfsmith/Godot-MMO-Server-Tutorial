@@ -45,8 +45,7 @@ func NPCHit(enemy_id, damage):
 		print(enemy_list[enemy_id]["EnemyHealth"])
 		enemy_list[enemy_id]["EnemyHealth"] = enemy_list[enemy_id]["EnemyHealth"] - damage
 		if enemy_list[enemy_id]["EnemyHealth"] <= 0:
-			print(enemy_list)
-			print(enemy_id)
+			get_node("/root/Server/WorldMap/Main Scene/Enemies/" + str(enemy_id)).queue_free()
 			enemy_list[enemy_id]["EnemyState"] = "Dead"
 			open_locations.append(occupied_locations[enemy_id])
 			occupied_locations.erase(enemy_id)

@@ -130,23 +130,6 @@ func ReceiveAttack(position, animation_vector, spawn_time, player_id):
 	else:
 		receive_attack.emit(position, animation_vector, spawn_time, player_id)
 
-func CallFetchSkillDamage(skill_name, requester):
-	if not multiplayer.is_server():
-		rpc_id(1, "FetchSkillDamage", skill_name, requester)
-	
-
-@rpc("any_peer")
-func FetchSkillDamage(skill_name, requester):
-	print("fetching")
-
-@rpc
-func ReturnSkillDamage(s_damage, requester):
-	print(s_damage)
-
-
-func NPCHit(enemy_id, damage):
-	SendNPCHit.rpc_id(1, enemy_id, damage)
-
 @rpc("any_peer")
 func SendNPCHit(enemy_id, damage):
 	pass

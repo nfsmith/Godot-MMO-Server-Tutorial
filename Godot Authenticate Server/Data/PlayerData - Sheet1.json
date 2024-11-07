@@ -1,5 +1,1 @@
-{
-	"Test": {
-		"Password": "Test123"
-	}
-}
+{"Test":{"Password":"Test123"},"test":{"Password":"37681a70c24dd644217db8bf21ff828ebee3e4449ab8810cf4fc31df32e4ce24","Salt":"42c7a3df2f97fb40770c65a4596487948fa8b7209f9365061c6f4dd63b60257c"},"test2":{"Password":"cd872ff8382ab6955413f0610a983dadf2df68dae999d88dff85548ecf79eed5","Salt":"69364b6c9d35ff1b918a9ae1db0483c20f25bedca3e0c4c8f75ff921fdac52d5"}}

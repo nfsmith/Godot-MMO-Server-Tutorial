@@ -55,10 +55,7 @@ func _on_area_detector_body_entered(body):
 	if body.name == player_name && body.get("die") != true:
 		body.Die()
 
-# Get hit, or die.
-func hit():
-	var damage = 100
-	OnHit(damage)
+
 		
 
 
@@ -82,11 +79,6 @@ func HealthBarUpdate():
 	else:
 		health_bar.set_modulate("e11e1e")
 
-func OnHit(damage):
-	Server.NPCHit(get_name().to_int(), damage)
-	#current_hp -= damage
-	#if current_hp <= 0:
-		#OnDeath()
 
 func OnDeath():
 	get_node("CollisionShape2D").set_deferred("disabled", true)

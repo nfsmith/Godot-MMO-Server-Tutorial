@@ -2,11 +2,20 @@
 
 [ext_resource type="Script" path="res://Scenes/Main/Server.gd" id="1_368od"]
 [ext_resource type="Script" path="res://Scenes/Main/PlayerVerification.gd" id="2_pqvu0"]
-[ext_resource type="Script" path="res://Scenes/Main/Combat.gd" id="3_axtmu"]
 [ext_resource type="Script" path="res://Scenes/Main/StateProcessing.gd" id="3_i3f2a"]
 [ext_resource type="Script" path="res://Scenes/Main/Map.gd" id="5_hfibw"]
 [ext_resource type="PackedScene" uid="uid://c87iiub1cb4mq" path="res://ServerMap.tscn" id="6_80u1h"]
 [ext_resource type="Script" path="res://WorldMap.gd" id="7_hf8df"]
+
+[sub_resource type="GDScript" id="GDScript_i6cku"]
+script/source = "extends Node
+
+
+# Called when the node enters the scene tree for the first time.
+func FetchSkillDamage(skill_name, player_id):
+	var damage = ServerData.skill_data[skill_name].Damage * (0.1 * get_node(\"../\"+str(player_id)).player_stats.Intelligence)
+	return damage
+"
 
 [node name="Server" type="Node"]
 script = ExtResource("1_368od")
@@ -21,7 +30,7 @@ wait_time = 10.0
 script = ExtResource("3_i3f2a")
 
 [node name="Combat" type="Node" parent="."]
-script = ExtResource("3_axtmu")
+script = SubResource("GDScript_i6cku")
 
 [node name="Map" type="Node" parent="."]
 script = ExtResource("5_hfibw")
